@@ -7,7 +7,7 @@
 <main>
 	<User />
 	<Club />
-	<Users />
+	<!-- <Users /> -->
 </main>
 
 <style>

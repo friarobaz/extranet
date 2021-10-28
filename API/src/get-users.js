@@ -1,6 +1,11 @@
 import { getClient, getAuth, getUsers } from "./soap"
+import { isPasswordOk } from "./auth"
 
 export const handler = async (event, context) => {
+  if (!isPasswordOk(event)) {
+    return { statusCode: 401, body: "Unauthorized" }
+  }
+
   const clubId = event.queryStringParameters.id
 
   if (!clubId) {

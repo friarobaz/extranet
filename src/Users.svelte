@@ -1,7 +1,7 @@
 <script>    
     const clubId = '7421'
-    const id = clubId
-    const url = `/.netlify/functions/get-users?id=${id}`
+    const password = 'bazinga'
+    const url = `/.netlify/functions/get-users?id=${clubId}&password=${password}`
 
     const getUsers = async () => {
         const response = await fetch(url)
