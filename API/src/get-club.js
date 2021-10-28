@@ -1,9 +1,7 @@
 import { getClient, getAuth, getClub } from "./soap"
 
-console.log("getting club")
-
 export const handler = async (event, context) => {
-  const clubId = "7421"
+  const clubId = event.queryStringParameters?.id
 
   if (!clubId) {
     return {

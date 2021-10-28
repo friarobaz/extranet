@@ -1,5 +1,6 @@
 <script>    
-    const uri = '/.netlify/functions/get-club'
+    const clubId = "7421"
+    const uri = `/.netlify/functions/get-club?id=${clubId}`
 
     const getData = async () => {
         const response = await fetch(uri)
