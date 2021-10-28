@@ -88,4 +88,13 @@ export default [
       dir: "API/functions",
     },
   },
+  {
+    input: "API/src/get-user.js",
+    output: {
+      sourcemap: true,
+      format: "cjs",
+      name: "functions",
+      dir: "API/functions",
+    },
+  },
 ]
