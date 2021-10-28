@@ -84,7 +84,6 @@ export default [
     output: {
       sourcemap: true,
       format: "cjs",
-      name: "functions",
       dir: "API/functions",
     },
   },
@@ -93,7 +92,6 @@ export default [
     output: {
       sourcemap: true,
       format: "cjs",
-      name: "functions",
       dir: "API/functions",
     },
   },
