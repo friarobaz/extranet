@@ -3,6 +3,6 @@
 
 .DS_Store
 
-/functions/*
+API/functions/
 # Local Netlify folder
 .netlify
