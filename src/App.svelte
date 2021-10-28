@@ -1,11 +1,13 @@
 <script>
 	import User from './User.svelte';
+	import Users from './Users.svelte';
 	import Club from './Club.svelte';
 </script>
 
 <main>
 	<User />
 	<Club />
+	<Users />
 </main>
 
 <style>

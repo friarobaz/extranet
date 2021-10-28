@@ -1,9 +1,9 @@
-import { getClient, getAuth, getUser } from "./soap"
+import { getClient, getAuth, getUsers } from "./soap"
 
 export const handler = async (event, context) => {
-  const userId = event.queryStringParameters?.id
+  const clubId = event.queryStringParameters?.id
 
-  if (!userId) {
+  if (!clubId) {
     return {
       statusCode: 404,
       body: "Parameter `id` missing",
@@ -12,12 +12,12 @@ export const handler = async (event, context) => {
 
   const client = await getClient()
   const auth = await getAuth(client)
-  const user = await getUser(client, auth, userId)
+  const users = await getUsers(client, auth, clubId)
 
   return {
     statusCode: 200,
     body: JSON.stringify({
-      user,
+      users,
     }),
   }
 }
