@@ -1,6 +1,6 @@
 <script>    
+    import { password } from './api-password.js'
     const clubId = '7421'
-    const password = 'bazinga'
     const url = `/.netlify/functions/get-users?id=${clubId}&password=${password}`
 
     const getUsers = async () => {
