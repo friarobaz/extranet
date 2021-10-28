@@ -80,7 +80,7 @@ export default [
     },
   },
   {
-    input: "API/src/api.js",
+    input: "API/src/get-club.js",
     output: {
       sourcemap: true,
       format: "cjs",
