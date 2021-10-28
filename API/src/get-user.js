@@ -1,8 +1,8 @@
 import { getClient, getAuth, getUser } from "./soap"
 
 export const handler = async (event, context) => {
-  //const userId = event.queryStringParameters?.id
-  const userId = "742120190080"
+  const userId = event.queryStringParameters.id
+  //const userId = "742120190080"
 
   if (!userId) {
     return {

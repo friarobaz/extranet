@@ -1,7 +1,7 @@
 <script>    
     const userId = '742120190080'
     const id = userId
-    const url = `/.netlify/functions/get-user`
+    const url = `/.netlify/functions/get-user?id=${userId}`
 
     const getUser = async () => {
         const response = await fetch(url)
