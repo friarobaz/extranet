@@ -2,12 +2,13 @@
 	import User from './User.svelte';
 	import Users from './Users.svelte';
 	import Club from './Club.svelte';
-	import { db } from './firebase';
+	
+
 </script>
 
 <main>
 	rien
-	<!-- <User /> -->
+	<User />
 	<!-- <Club /> -->
 	<!-- <Users /> -->
 </main>

@@ -1,13 +1,7 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js"
-import {
-  getFirestore,
-  collection,
-  getDocs,
-  getDoc,
-  doc,
-} from "https://www.gstatic.com/firebasejs/9.1.3/firebase-firestore.js"
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import { getFirestore } from "firebase/firestore"
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -28,8 +22,3 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig)
 const analytics = getAnalytics(firebaseApp)
 export const db = getFirestore(firebaseApp)
-
-/* const docRef = doc(db, "admin", "api-password")
-const docSnap = await getDoc(docRef)
-const password = docSnap.data().password
-console.log(password) */
