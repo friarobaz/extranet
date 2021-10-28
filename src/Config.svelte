@@ -1,6 +1,6 @@
 <script>
-    let data;
-    let message;
+    let data
+    let message
     const uri = '/.netlify/functions/api'
     async function getData () {
         let response = await fetch(uri,
