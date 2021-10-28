@@ -9,8 +9,8 @@
 <main>
 	rien
 	<User />
-	<!-- <Club /> -->
-	<!-- <Users /> -->
+	<Club />
+	<Users />
 </main>
 
 <style>

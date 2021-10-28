@@ -1,9 +1,11 @@
 <script>    
-
+    import { getApiPassword } from './api-password'
     const clubId = '7421'
-    const url = `/.netlify/functions/get-club?id=${clubId}&password=${password}`
+    
     
     const getClub = async () => {
+        const password = await getApiPassword()
+        const url = `/.netlify/functions/get-club?id=${clubId}&password=${password}`
         const response = await fetch(url)
         const data = await response.json()
         return {
