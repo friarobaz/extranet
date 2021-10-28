@@ -27,9 +27,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig)
 const analytics = getAnalytics(firebaseApp)
-const db = getFirestore(firebaseApp)
+export const db = getFirestore(firebaseApp)
 
-const docRef = doc(db, "admin", "api-password")
+/* const docRef = doc(db, "admin", "api-password")
 const docSnap = await getDoc(docRef)
 const password = docSnap.data().password
-console.log(password)
+console.log(password) */
