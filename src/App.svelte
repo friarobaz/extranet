@@ -1,11 +1,11 @@
 <script>
-	import Config from './Config.svelte';
+	import User from './User.svelte';
+	import Club from './Club.svelte';
 </script>
 
 <main>
-	<Config />
-	<h1>Hello test</h1>
-	<p>Visit the <a href="https://svelte.dev/tutorial">Svelte tutorial</a> to learn how to build Svelte apps.</p>
+	<User />
+	<Club />
 </main>
 
 <style>
