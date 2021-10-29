@@ -1,13 +1,15 @@
 <script>
 	import { getAuth, onAuthStateChanged } from "firebase/auth";
-	import User from './User.svelte';
-	import Users from './Users.svelte';
-	import Club from './Club.svelte';
+	import User from './User.svelte'
+	import Users from './Users.svelte'
+	import Club from './Club.svelte'
 	import SignUp from './SignUp.svelte'
 	import Login from './Login.svelte'
+	import ResetPassword from './ResetPassword.svelte'
 	
 	const auth = getAuth()
 	let loggedIn = false
+
 	onAuthStateChanged(auth, (user)=>{
 		if (user) {
 			loggedIn = true
@@ -23,9 +25,12 @@
 	{#if loggedIn}
 	Logged in{:else}
 	Logged out{/if}
+	<br><br>
+	<!-- <ResetPassword /> -->
+	<br><br>
 	<Login />
 	<br>
-	<SignUp />
+	<!-- <SignUp /> -->
 	<br>
 	<User />
 	<Club />

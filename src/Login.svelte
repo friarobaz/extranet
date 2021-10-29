@@ -1,60 +1,44 @@
 <script>
-    import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
+    import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
+    import EmailForm from "./components/EmailForm.svelte"
+    import PasswordForm from "./components/PasswordForm.svelte"
+    import ErrorMessage from "./components/ErrorMessage.svelte"
     const auth = getAuth();
-    let email = ''
+    let email
     let password = ''
-    let code = ''
+    let error = null
     
-    const handleLogin = (e) => {
+    const handleClick = (e) => {
         e.preventDefault()
+        console.log(`trying to loggin : ${email}`)
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log('Logged in')
-            const user = userCredential.user;
-            console.log(user)
+            console.log(`Logged in as ${email}`)
+            console.log(userCredential.user)
             email = ''
             password = ''
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage, errorCode)
+        .catch((e) => {
+            console.error(e)
+            error = e.code
         });
-    }    
+    }  
+
     const handleLogout = (e) => {
         e.preventDefault()
         console.log('signing out')
         signOut(auth)
         
-    }    
-
-    const handleEmail = async (e) => {
-        e.preventDefault()
-        const actionCodeSettings = {
-        url: 'https://extranet-caf.netlify.app/',
-        handleCodeInApp: true
-        };
-        await sendPasswordResetEmail(auth, email, actionCodeSettings);
-        // Obtain code from user.
-        //await confirmPasswordReset(email, code);
-
-}
-
+    } 
 </script>
 
-<h4>Log in</h4><br />
-
 <form>
-    <input type="text" bind:value={code} >
-<div>
-    <input type="email" bind:value={email} required />
-    <label for="signup-email">Email address</label>
-</div>
-<div>
-    <input type="password" bind:value={password} required />
-    <label for="signup-password">Password</label>
-</div>
-<button on:click={handleLogin}>LOGIN</button>
-<button on:click={handleLogout}>LOG OUT</button>
-<button on:click={handleEmail}>SEND EMAIL</button>
+    <h3>Se connecter</h3>
+    <EmailForm bind:email={email}/>
+    <PasswordForm bind:password={password}/>
+    <br>
+    <button on:click={handleClick}>Se connecter</button>
+    {#if error}
+        <ErrorMessage code={error}/>
+    {/if}
 </form>
