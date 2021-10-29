@@ -1,8 +1,9 @@
 <script>
-    import { getAuth, signInWithEmailAndPassword, signOut } from "firebase/auth";
+    import { getAuth, signInWithEmailAndPassword, signOut, sendPasswordResetEmail, confirmPasswordReset } from "firebase/auth";
     const auth = getAuth();
     let email = ''
     let password = ''
+    let code = ''
     
     const handleLogin = (e) => {
         e.preventDefault()
@@ -27,11 +28,24 @@
         
     }    
 
+    const handleEmail = async (e) => {
+        e.preventDefault()
+        const actionCodeSettings = {
+        url: 'https://extranet-caf.netlify.app/',
+        handleCodeInApp: true
+        };
+        await sendPasswordResetEmail(auth, email, actionCodeSettings);
+        // Obtain code from user.
+        //await confirmPasswordReset(email, code);
+
+}
+
 </script>
 
 <h4>Log in</h4><br />
 
 <form>
+    <input type="text" bind:value={code} >
 <div>
     <input type="email" bind:value={email} required />
     <label for="signup-email">Email address</label>
@@ -42,4 +56,5 @@
 </div>
 <button on:click={handleLogin}>LOGIN</button>
 <button on:click={handleLogout}>LOG OUT</button>
+<button on:click={handleEmail}>SEND EMAIL</button>
 </form>

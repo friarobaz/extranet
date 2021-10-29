@@ -25,7 +25,7 @@
 	Logged out{/if}
 	<Login />
 	<br>
-	<!-- <SignUp /> -->
+	<SignUp />
 	<br>
 	<User />
 	<Club />
