@@ -45,7 +45,5 @@ const handleClick = async (e) => {
 </form>
 
 <style>
-    .hidden{
-        display: none
-    }
+    
 </style>

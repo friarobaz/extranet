@@ -26,7 +26,6 @@
 </script>
 
 <form>
-    <a href="#/">Home</a>
     <h3>Se connecter</h3>
     <EmailForm bind:email={email}/>
     <PasswordForm bind:password={password}/>

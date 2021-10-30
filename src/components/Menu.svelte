@@ -1,19 +1,32 @@
 <script>
     const pages = [
-        {name: 'Accueil', url: '/'},
-        {name: 'Login', url: '#/login'},
-        {name: 'Utilisateur', url: '#/user/742120190080'},
-        {name: 'Club', url: '#/club/7421'},
-
+        {name: 'Accueil', url: '#/home', public: true},
+        {name: 'Se connecter', url: '#/login', public: true},
+        {name: 'Créer un compte', url: '#/signup', public: true},
+        {name: 'Réinitialiser votre mot de passe', url: '#/resetPassword', public: true},
+        {name: 'Utilisateur', url: '#/user/742120190080', public: false},
+        {name: 'Club', url: '#/club/7421', public: false},
+        {name: 'Vérifier email', url: '#/verifyEmail', public: false},
     ]
+    export let user = null
 </script>
 
 <ul>
 	{#each pages as page}
-		<li><a href="{page.url}">{page.name}</a></li>
+        {#if user || page.public}
+            <li><a href="{page.url}">{page.name}</a></li>
+        {:else}
+            <li class='disabled' on:click={()=>{alert('Connectez vous pour accéder à ces foncionnalités')}}><a href="{page.url}">{page.name}</a></li>
+        {/if}
 	{/each}
 </ul>
 
 <style>
-
+    .disabled a{
+        color: grey;
+        cursor: not-allowed;
+    }
+    .disabled:hover a{
+        text-decoration: underline;
+    }
 </style>
