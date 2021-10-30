@@ -1,6 +1,7 @@
 <script>    
-    import { getApiPassword } from './api-password'
-    const clubId = '7421'
+    import { getApiPassword } from '../utils/get-api-password'
+    export let params = {id:null}
+    const clubId = params.id
     
     
     const getClub = async () => {

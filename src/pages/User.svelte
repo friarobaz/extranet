@@ -1,6 +1,7 @@
 <script>    
-    import { getApiPassword } from './api-password'
-    const userId = '742120190080'
+    import { getApiPassword } from '../utils/get-api-password'
+    export let params = {id:null}
+    const userId = params.id
     
     const getUser = async () => {
         const password = await getApiPassword()

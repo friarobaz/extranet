@@ -1,8 +1,8 @@
 <script>
     import { getAuth, signInWithEmailAndPassword } from "firebase/auth"
-    import EmailForm from "./components/EmailForm.svelte"
-    import PasswordForm from "./components/PasswordForm.svelte"
-    import ErrorMessage from "./components/ErrorMessage.svelte"
+    import EmailForm from "../components/EmailForm.svelte"
+    import PasswordForm from "../components/PasswordForm.svelte"
+    import ErrorMessage from "../components/ErrorMessage.svelte"
     const auth = getAuth();
     let email
     let password = ''
@@ -33,6 +33,7 @@
 </script>
 
 <form>
+    <a href="#/">Home</a>
     <h3>Se connecter</h3>
     <EmailForm bind:email={email}/>
     <PasswordForm bind:password={password}/>

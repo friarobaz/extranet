@@ -1,7 +1,7 @@
 <script>
 import { getAuth, sendPasswordResetEmail } from "firebase/auth"
-import ErrorMessage from './components/ErrorMessage.svelte'
-import EmailForm from './components/EmailForm.svelte'
+import ErrorMessage from '../components/ErrorMessage.svelte'
+import EmailForm from '../components/EmailForm.svelte'
 const auth = getAuth()
 let email
 let emailSent = false

@@ -1,11 +1,26 @@
 <script>
 	import { getAuth, onAuthStateChanged } from "firebase/auth";
-	import User from './User.svelte'
-	import Users from './Users.svelte'
-	import Club from './Club.svelte'
-	import SignUp from './SignUp.svelte'
-	import Login from './Login.svelte'
-	import ResetPassword from './ResetPassword.svelte'
+	import Router from 'svelte-spa-router'
+	import User from './pages/User.svelte'
+	import Users from './pages/Users.svelte'
+	import Club from './pages/Club.svelte'
+	import SignUp from './pages/SignUp.svelte'
+	import Login from './pages/Login.svelte'
+	import ResetPassword from './pages/ResetPassword.svelte'
+	import Home from './pages/Home.svelte'
+	import Menu from './components/Menu.svelte'
+
+	const routes = {
+		'/': Home,
+		'/login': Login,
+		'/signup': SignUp,
+		'/resetpassword': ResetPassword,
+		'/user/:id' : User,
+		'/club/:id' : Club,
+		'/users/:id' : Users,
+		//'*': NotFound,
+	}
+
 	
 	const auth = getAuth()
 	let loggedIn = false
@@ -20,20 +35,21 @@
 	})
 
 </script>
-
+<Menu />
 <main>
+	<Router {routes}/>
 	{#if loggedIn}
 	Logged in{:else}
 	Logged out{/if}
 	<br><br>
 	<!-- <ResetPassword /> -->
 	<br><br>
-	<Login />
+	<!-- <Login /> -->
 	<br>
 	<!-- <SignUp /> -->
 	<br>
-	<User />
-	<Club />
+	<!-- <User />
+	<Club /> -->
 	<!-- <Users /> -->
 </main>
 
