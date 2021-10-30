@@ -2,8 +2,8 @@
     const pages = [
         {name: 'Accueil', url: '/'},
         {name: 'Login', url: '#/login'},
-        {name: 'Utilisateur', url: '#/user'},
-        {name: 'Club', url: '#/club'},
+        {name: 'Utilisateur', url: '#/user/742120190080'},
+        {name: 'Club', url: '#/club/7421'},
 
     ]
 </script>

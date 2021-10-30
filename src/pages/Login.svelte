@@ -23,13 +23,6 @@
             error = e.code
         });
     }  
-
-    const handleLogout = (e) => {
-        e.preventDefault()
-        console.log('signing out')
-        signOut(auth)
-        
-    } 
 </script>
 
 <form>
