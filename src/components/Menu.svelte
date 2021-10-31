@@ -7,6 +7,7 @@
         {name: 'Utilisateur', url: '#/user/742120190080', public: false},
         {name: 'Club', url: '#/club/7421', public: false},
         {name: 'Vérifier email', url: '#/verifyEmail', public: false},
+        {name: 'Users', url: '#/users/7421', public: false},
     ]
     export let user = null
 </script>
