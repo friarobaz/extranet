@@ -1,10 +1,11 @@
 <script>
-    import { collection, addDoc, getDoc, query, where, getDocs, orderBy } from "firebase/firestore"; 
+    import { collection, addDoc, getDoc, query, where, getDocs, orderBy, setDoc, doc } from "firebase/firestore"; 
     import {db} from '../utils/firebase'
     import {makeUserObjectFromAPI} from '../utils/makeUserObjectFromAPI'
+    import { getUserFromApi } from '../utils/getDataFromApi'
 
     
-    import { getApiPassword } from '../utils/get-api-password'
+    import { getApiPassword } from '../utils/getApiPassword'
     export let params = {id:null}
     const clubId = params.id
 
@@ -14,25 +15,6 @@
     const isClimber = (firestoreUser) => {
         const activities = firestoreUser.activities
         return activities.includes("escalade")
-    }
-
-    const getJules = async () => {
-        const url = `/.netlify/functions/get-user?id=742120190080&password=bazinga`
-        const response = await fetch(url)
-        const data = await response.json()
-        const user = data.user
-        return user
-    }
-
-    const getUsersFromAPI = async () => {
-        const password = await getApiPassword()
-        const url = `/.netlify/functions/get-users?id=${clubId}&password=${password}`
-        const response = await fetch(url)
-        const data = await response.json()
-        const users = data.users
-        const result = users
-        console.log(result)
-        return result
     }
     
 
@@ -73,15 +55,23 @@
         return users
     }
 
+    const compareUserBetweenAPIandFirestore = async (userId) => {
+
+    }
+
 
     const copyDatabaseToFirestore = async () => {
-        const users = await getUsers()
+        const users = await getUsersFromAPI()
         //const jules = await getJules()
         //const users = [jules]
+        let x = 0
         for (const user of users) {
             //const docRef = await addDoc(collection(db, "users"), makeUserObjectFromAPI(user))
-            console.log("Document written with ID: ", docRef.id)
+            //await setDoc(doc(db, "users", user.id.$value), makeUserObjectFromAPI(user));
+            //console.log("Document written with ID: ", docRef.id)
+            x++
         }
+        console.log(x)
     }
 
     const usersByActivity = async () => {
@@ -95,11 +85,12 @@
         let sorted = usersByActivity.sort(function(a, b){return a.count - b.count});
         return {usersByActivity:sorted, total:recentUsers.length}
     }
+    //copyDatabaseToFirestore()
+    //let promise = usersByActivity()
 
-    let promise = usersByActivity()
 </script>
 
-USERS
+<!-- USERS
 {#await promise}
 	<p>...waiting</p>
 {:then response}
@@ -110,7 +101,7 @@ USERS
     </ul>
 {:catch error}
 	<p style="color: red">{error.message}</p>
-{/await}
+{/await} -->
 
 <style>
     li{

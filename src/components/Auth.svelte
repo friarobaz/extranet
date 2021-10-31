@@ -10,7 +10,7 @@
     $: email = user ? user.email : null
     $: verified = user ? user.emailVerified : null
     onAuthStateChanged(getAuth(), (userObj)=>{
-		console.log('auth state changed')
+		//console.log('auth state changed')
 		user = userObj
         $currentUser = userObj
         replace($location) //refresh

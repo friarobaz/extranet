@@ -1,5 +1,5 @@
 <script>    
-    import { getApiPassword } from '../utils/get-api-password'
+    import { getApiPassword } from '../utils/getApiPassword'
     export let params = {id:null}
     const userId = params.id
 
