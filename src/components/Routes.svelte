@@ -60,7 +60,7 @@
       url: '/users',component: Users, conditions : [isLoggedIn, isVerified]
     },
     {
-      url: '/user/:id',component: User, conditions : [isLoggedIn, isVerified]
+      url: '/user/:id?',component: User, conditions : [isLoggedIn, isVerified]
     },
     {
       url: '/updateFirestore',component: UpdateFirestore, conditions : [isLoggedIn, isVerified]

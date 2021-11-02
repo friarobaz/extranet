@@ -62,7 +62,6 @@ import { getUsersFromApi } from "../utils/getUsersFromApi";
 <form>
     A jour :<input type="checkbox" bind:checked={recent}><br>
     <input type="text" bind:value={input} autofocus>
-    
 </form>
 
 

@@ -1,20 +1,15 @@
 <script>
-    import { getUserFromFirestore } from "../utils/getUserFromFirestore"
+    import UserProfile from "../components/UserProfile.svelte"
+    import NameSearch from "../components/NameSearch.svelte"
     export let params = {id:null}
-    const userId = params.id
-    let promise = getUserFromFirestore(userId)
+    $: id = params.id
 </script>
 
-{#await promise}
-	<p>Attendez deux secondes...</p>
-{:then user}
-<div>ID: {user.id}</div>
-<div>{user.firstName} {user.lastName}</div>
-<div>{user.signupDate}</div>
-	
-{:catch error}
-	<p>Error: {error.message}</p>
-{/await}
+{#if id}
+	<UserProfile bind:userId={id}/>
+{:else}
+    <NameSearch />
+{/if}
 
 
 
