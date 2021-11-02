@@ -1,6 +1,6 @@
 import { getDataFromApi } from "./getDataFromApi"
 import { check, success, warning } from "./log"
-const LOG_INDENT = 0
+const LOG_INDENT = 1
 
 export const getUserFromApi = async (userId) => {
   const url = `/.netlify/functions/get-user?id=${userId}`
@@ -14,6 +14,6 @@ export const getUserFromApi = async (userId) => {
   } catch (error) {
     warning("User not found", LOG_INDENT)
     console.error(error)
-    return
+    return null
   }
 }

@@ -10,6 +10,8 @@
     import Users from "../pages/Users.svelte";
     import User from "../pages/User.svelte";
     import {currentUser} from '../utils/stores'
+    import UpdateFirestore from "../pages/UpdateFirestore.svelte";
+    import Test from "../pages/Test.svelte";
     export let user = $currentUser
     
     const isLoggedIn = () =>{
@@ -52,13 +54,19 @@
       url: '/verifyEmail',component: VerifyEmail, conditions : [isLoggedIn]
     },
     {
-      url: '/club/:id',component: Club, conditions : [isLoggedIn, isVerified]
+      url: '/club',component: Club, conditions : [isLoggedIn, isVerified]
     },
     {
-      url: '/users/:id',component: Users, conditions : [isLoggedIn, isVerified]
+      url: '/users',component: Users, conditions : [isLoggedIn, isVerified]
     },
     {
       url: '/user/:id',component: User, conditions : [isLoggedIn, isVerified]
+    },
+    {
+      url: '/updateFirestore',component: UpdateFirestore, conditions : [isLoggedIn, isVerified]
+    },
+    {
+      url: '/test',component: Test, conditions : [isLoggedIn, isVerified]
     },
     ]
 

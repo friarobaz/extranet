@@ -1,42 +1,75 @@
-const capitalize = (string) => {
-  return string.charAt(0).toUpperCase() + string.toLowerCase().slice(1)
-}
+import _ from "lodash"
+
 const getActivities = (user) => {
+  //if no activities
   if (!user.activites_pratiquees.item) return null
+
+  //if only one
   if (user.activites_pratiquees.item.length === undefined)
-    return user.activites_pratiquees.item.description.$value.toLowerCase()
+    return user.activites_pratiquees.item.description.$value.toUpperCase()
+
   const refs = user.activites_pratiquees.item
-  const activities = refs.map((ref) => ref.description.$value.toLowerCase())
+  const activities = refs.map((ref) => ref.description.$value.toUpperCase())
   if (activities === undefined) return null
   return activities
 }
+
+const getLibelle = (object) => {
+  if (object.libelle.$value) return object.libelle.$value
+  return object.libelle_libre.$value
+}
+
 const getLibelles = (array) => {
   if (!array.item) return null
-  const getLibelle = (object) => {
-    if (object.libelle.$value) return object.libelle.$value
-    return object.libelle_libre.$value
-  }
+
   //if only one
   if (array.item.length === undefined) return getLibelle(array.item)
+
   const libelles = array.item.map((ref) => getLibelle(ref))
   return libelles
 }
 
-export const makeUserObjectFromAPI = (userFromAPI) => {
-  console.log(`Creating user for id ${userFromAPI.id.$value}`)
+const getDiplomas = (user) => {
+  //if no diplomas
+  if (!user.diplomes.item) return null
+
+  //if only one
+  if (user.diplomes.item.length === undefined) {
+    const diploma = {
+      name: user.diplomes.item.libelle.$value,
+      date: user.diplomes.item.obtention.$value,
+      code: user.diplomes.item.diplome.$value,
+    }
+    return diploma
+  }
+
+  //if multiple diplomas
+  let diplomas = []
+  for (const diploma of user.diplomes.item) {
+    diplomas.push({
+      name: diploma.libelle.$value,
+      date: diploma.obtention.$value,
+      code: diploma.diplome.$value,
+    })
+  }
+  return diplomas
+}
+
+export const formatApiUser = (userFromAPI) => {
+  //console.log(`Formatting user`)
   const value = (field) => {
     if (!userFromAPI[field].$value) return null
     return userFromAPI[field].$value
   }
   let newObject = {
-    firstName: capitalize(value("prenom")),
+    firstName: value("prenom").toUpperCase(),
     lastName: value("nom").toUpperCase(),
+    name: value("prenom").toUpperCase() + " " + value("nom").toUpperCase(),
     accidentContact: {
       name: value("accident_qui"),
       phoneNumber: value("accident_tel"),
     },
     activities: getActivities(userFromAPI),
-    activities_full: userFromAPI.activites_pratiquees,
     address: {
       line1: value("adresse1"),
       line2: value("adresse2"),
@@ -66,12 +99,11 @@ export const makeUserObjectFromAPI = (userFromAPI) => {
     licenceType: value("categorie"),
     familyLeader: value("chef_famille"),
     signupDate: value("date_inscription"),
+    signedupThisYear: value("date_inscription") != "0000-00-00",
     dateOfBirth: value("date_naissance"),
-    diplomas: getLibelles(userFromAPI.diplomes),
-    diplomas_full: userFromAPI.diplomes,
+    diplomas: getDiplomas(userFromAPI),
     email: value("email"),
     roles: getLibelles(userFromAPI.fonctions),
-    roles_full: userFromAPI.fonctions,
     id: value("id"),
     userId: value("adherent"),
     clubId: value("idclub"),
@@ -79,9 +111,9 @@ export const makeUserObjectFromAPI = (userFromAPI) => {
     banReason: value("motif_radiation"),
     phoneNumbers: [value("portable"), value("tel")],
     sex: value("qualite") == "M" ? "male" : "female",
-    clubActivites_full: userFromAPI.activites_club,
     publicKey: value("cle_publique"),
   } //end new object
-  console.log(newObject)
+  //console.log(newObject)
+  //console.log("Done formatting")
   return newObject
 }

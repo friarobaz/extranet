@@ -2,36 +2,29 @@
 	import Auth from './components/Auth.svelte'
 	
 	
-	import { getUsersFromApi } from './utils/getUsersFromApi'
 	import { getUserFromApi } from './utils/getUserFromApi'
+	import { updateFirestore } from './utils/updateFirestore'
+	import { getUserChanges } from './utils/getUserChanges'
 
+	import {getUsersFromFirestore} from './utils/getUsersFromFirestore'
+import { getUserFromFirestore } from './utils/getUserFromFirestore';
+import { formatApiUser } from './utils/formatApiUser';
 
-	import { doc, getDoc } from "firebase/firestore"
-	import {db} from './utils/firebase'
-	import { check, success, warning } from "./utils/log"
-
-	const getUserFromFirestore = async (userId) => {
-		check(`Getting user from Firestore ID: ${userId}`)
-        const docRef = doc(db, "users", userId.toString());
-		const docSnap = await getDoc(docRef);
-
-		if (docSnap.exists()) {
-			const user = docSnap.data()
-			success(`User found: ${user.firstName} ${user.lastName}`)
-			//console.log(user)
-			return user
-		} else {
-			warning('User not found')
-			return
-		}
-    }
 	const run = async () => {
-		await getUserFromApi(742120190080)
-		console.log('############################')
-		await getUserFromFirestore(742120190080)
+		//await getUsersFromFirestore()
+		const api = await getUserFromApi(742120190080)
+		const formatted = formatApiUser(api)
+		const firebase = await getUserFromFirestore(742120190080)
+		
+		getUserChanges(formatted, firebase)
 	}
 
-	run()
+	//run()
+	//isUserUpToDate(742120190080)
+	//updateUser(742120190080)
+	//updateFirestore()
+	//getUserChanges()
+	//run()
 	
 	
 </script>

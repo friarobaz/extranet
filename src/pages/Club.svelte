@@ -1,12 +1,10 @@
 <script>    
     import { getApiPassword } from '../utils/getApiPassword'
-    export let params = {id:null}
-    const clubId = params.id
     
     
     const getClub = async () => {
         const password = await getApiPassword()
-        const url = `/.netlify/functions/get-club?id=${clubId}&password=${password}`
+        const url = `/.netlify/functions/get-club?id=7421&password=${password}`
         const response = await fetch(url)
         const data = await response.json()
         return {
