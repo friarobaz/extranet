@@ -10,10 +10,31 @@
     $: email = user ? user.email : null
     $: verified = user ? user.emailVerified : null
     onAuthStateChanged(getAuth(), (userObj)=>{
-		//console.log('auth state changed')
+		console.log('auth state changed')
+    console.log(userObj)
 		user = userObj
-        $currentUser = userObj
-        replace($location) //refresh
+    $currentUser = userObj
+      if(userObj){
+        userObj.getIdTokenResult()
+      .then((idTokenResult) => {
+     // Confirm the user is an Admin.
+     if (!!idTokenResult.claims.admin) {
+       // Show admin UI.
+       console.log('is an admin')
+     } else {
+       // Show regular user UI.
+       console.log('is NOT an admin')
+     }
+  })
+  .catch((error) => {
+    console.log(error);
+  });
+      }
+
+
+
+
+    replace($location) //refresh
 	})
 </script>
 

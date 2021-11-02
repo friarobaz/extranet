@@ -66,7 +66,7 @@
       url: '/updateFirestore',component: UpdateFirestore, conditions : [isLoggedIn, isVerified]
     },
     {
-      url: '/test',component: Test, conditions : [isLoggedIn, isVerified]
+      url: '/test',component: Test, conditions : []
     },
     ]
 

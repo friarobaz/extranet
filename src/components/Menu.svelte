@@ -9,7 +9,7 @@
         {name: 'Vérifier email', url: '#/verifyEmail', public: false},
         {name: 'Users', url: '#/users', public: false},
         {name: 'Update', url: '#/updateFirestore', public: false},
-        {name: 'Test', url: '#/test', public: false},
+        {name: 'Test', url: '#/test', public: true},
     ]
     export let user = null
 </script>
