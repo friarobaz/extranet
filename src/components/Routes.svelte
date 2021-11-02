@@ -12,7 +12,6 @@
     import {currentUser} from '../utils/stores'
     import UpdateFirestore from "../pages/UpdateFirestore.svelte";
     import Test from "../pages/Test.svelte";
-    import AddAdmin from "../pages/AddAdmin.svelte";  
     export let user = $currentUser
     
     const isLoggedIn = () =>{
@@ -68,9 +67,6 @@
     },
     {
       url: '/test',component: Test, conditions : [isLoggedIn, isVerified]
-    },
-    {
-      url: '/addAdmin',component: AddAdmin, conditions : [isLoggedIn, isVerified]
     },
     ]
 

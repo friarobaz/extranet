@@ -10,7 +10,6 @@
         {name: 'Users', url: '#/users', public: false},
         {name: 'Update', url: '#/updateFirestore', public: false},
         {name: 'Test', url: '#/test', public: false},
-        {name: 'Add Admin', url: '#/addAdmin', public: false},
     ]
     export let user = null
 </script>
