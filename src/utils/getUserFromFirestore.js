@@ -18,12 +18,11 @@ export const getUserFromFirestore = async (userId, log = false) => {
       //console.log(user)
       return user
     } else {
-      warning(`User not found ID:${userId}`, LOG_INDENT)
-      return null
+      throw "User not found"
     }
   } catch (error) {
     console.error(error)
     warning(`User not found ID:${userId}`, LOG_INDENT)
-    return null
+    throw "Utilateur non trouvé"
   }
 }
