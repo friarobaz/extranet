@@ -7,6 +7,7 @@
     import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import {info, check, success, warning} from '../utils/log'
     
+    let userStoreUpToDate = false
     onAuthStateChanged(getAuth(), (usr)=>{
       info('👤 Auth state changed')
       $currentUser = usr
@@ -17,6 +18,7 @@
       }else{
         $admin = false
       }
+      userStoreUpToDate = true
       replace($location) //refresh
 	  })
 </script>
@@ -31,5 +33,9 @@ admin: {$admin}
 <LoginStatus />
 <Menu />
 <hr>
-<Routes />
+
+{#if userStoreUpToDate}
+  <Routes />
+{/if}
+
 

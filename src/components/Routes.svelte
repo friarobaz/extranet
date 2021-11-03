@@ -12,34 +12,35 @@
     import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import UpdateFirestore from "../pages/UpdateFirestore.svelte";
     import Test from "../pages/Test.svelte";
+    import {check, success, warning} from '../utils/log'
     
     const isLoggedIn = () =>{
       if (!$loggedin) {
-        console.log('You cant visit this page if not logged in, redirecting')
+        warning('You cant visit this page if not logged in, redirecting')
         push("/login")
         return false
       }
-      console.log('User logged in, access allowed')
+      success('User logged in, access allowed')
       return true
 	  }
     const isVerified = () =>{
       if (!$verified) {
-        console.log('You cant visit this page if not verified, redirecting')
+        warning('You cant visit this page if not verified, redirecting')
         push("/verifyEmail")
         return false
       }
       //verified
-      console.log('User verified, access allowed')
+      success('User verified, access allowed')
       return true
 	  }
     const isAdmin = () =>{
       if (!$admin) {
-        console.log('You need to be an admin to visit this page')
+        warning('You need to be an admin to visit this page')
         push("/login")
         return false
       }
       //verified
-      console.log('User is an admin, access allowed')
+      success('User is an admin, access allowed')
       return true
 	  }
 
