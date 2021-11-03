@@ -9,34 +9,40 @@
     import Club from "../pages/Club.svelte";
     import Users from "../pages/Users.svelte";
     import User from "../pages/User.svelte";
-    import {currentUser} from '../utils/stores'
+    import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import UpdateFirestore from "../pages/UpdateFirestore.svelte";
     import Test from "../pages/Test.svelte";
-    export let user = $currentUser
     
     const isLoggedIn = () =>{
-      //NOT logged in
-      if (!user) {
+      if (!$loggedin) {
         console.log('You cant visit this page if not logged in, redirecting')
         push("/login")
         return false
       }
-      //logged in
       console.log('User logged in, access allowed')
       return true
 	  }
     const isVerified = () =>{
-      if (!user) return false
-      //NOT verified
-      if (!user.emailVerified) {
+      if (!$verified) {
         console.log('You cant visit this page if not verified, redirecting')
         push("/verifyEmail")
         return false
       }
       //verified
-      console.log('User verified in, access allowed')
+      console.log('User verified, access allowed')
       return true
 	  }
+    const isAdmin = () =>{
+      if (!$admin) {
+        console.log('You need to be an admin to visit this page')
+        push("/login")
+        return false
+      }
+      //verified
+      console.log('User is an admin, access allowed')
+      return true
+	  }
+
 
     const pages = [{
       url: '/home', component: Home, conditions : []
@@ -54,16 +60,16 @@
       url: '/verifyEmail',component: VerifyEmail, conditions : [isLoggedIn]
     },
     {
-      url: '/club',component: Club, conditions : [isLoggedIn, isVerified]
+      url: '/club',component: Club, conditions : [isVerified]
     },
     {
-      url: '/users',component: Users, conditions : [isLoggedIn, isVerified]
+      url: '/users',component: Users, conditions : [isVerified]
     },
     {
-      url: '/user/:id?',component: User, conditions : [isLoggedIn, isVerified]
+      url: '/user/:id?',component: User, conditions : [isVerified]
     },
     {
-      url: '/updateFirestore',component: UpdateFirestore, conditions : [isLoggedIn, isVerified]
+      url: '/updateFirestore',component: UpdateFirestore, conditions : [isAdmin]
     },
     {
       url: '/test',component: Test, conditions : []
@@ -82,5 +88,4 @@
     }
     const routes = makeRoutes()
 </script>
-
-<Router {routes} />
+<Router {routes}/>

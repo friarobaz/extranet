@@ -1,10 +1,17 @@
 <script>
     import { getAuth, signOut } from "firebase/auth"
+    import {check, success, warning} from '../utils/log'
     const auth = getAuth()
     const handleClick = (e) =>{
         e.preventDefault()
-        console.log('signing out')
-        signOut(auth)
+        check('Signing out')
+        try {
+            signOut(auth)
+            success(`Logged out`)
+        } catch (error) {
+            warning('Could not sign out')
+            throw error
+        }
     }
 </script>
 

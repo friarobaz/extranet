@@ -21,3 +21,8 @@ export const black = (msg) => {
   const css = `background: black; color: white; font-size:${FONT_SIZE}rem`
   console.log(`%c🔘          ${msg}          🔘`, css)
 }
+
+export const info = (msg, spaces = 0) => {
+  const css = `color: blue; font-size:${FONT_SIZE}rem`
+  console.log(`%c${SPACE.repeat(spaces * INDENT_SIZE)}${msg}`, css)
+}

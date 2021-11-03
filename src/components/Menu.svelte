@@ -1,22 +1,30 @@
 <script>
+    import{loggedin, admin, verified} from '../utils/stores'
+    import{warning} from '../utils/log'
     const pages = [
-        {name: 'Accueil', url: '#/home', public: true},
-        {name: 'Se connecter', url: '#/login', public: true},
-        {name: 'Créer un compte', url: '#/signup', public: true},
-        {name: 'Réinitialiser votre mot de passe', url: '#/resetPassword', public: true},
-        {name: 'Utilisateur', url: '#/user', public: false},
-        {name: 'Club', url: '#/club', public: false},
-        {name: 'Vérifier email', url: '#/verifyEmail', public: false},
-        {name: 'Users', url: '#/users', public: false},
-        {name: 'Update', url: '#/updateFirestore', public: false},
-        {name: 'Test', url: '#/test', public: true},
+        {name: 'Accueil', url: '#/home', auth:'public'},
+        {name: 'Se connecter', url: '#/login', auth:'public'},
+        {name: 'Créer un compte', url: '#/signup', auth:'public'},
+        {name: 'Réinitialiser votre mot de passe', url: '#/resetPassword', auth:'public'},
+        {name: 'Utilisateur', url: '#/user', auth:'verified'},
+        {name: 'Club', url: '#/club', auth:'verified'},
+        {name: 'Vérifier email', url: '#/verifyEmail', auth:'loggedin'},
+        {name: 'Users', url: '#/users', auth:'verified'},
+        {name: 'Update', url: '#/updateFirestore', auth:'admin'},
+        {name: 'Test', url: '#/test', auth:'public'},
     ]
-    export let user = null
+    $:isAuthorized = (page) => {
+        if(page.auth=='public') return true
+        if(page.auth=='loggedin') return $loggedin
+        if(page.auth=='verified') return $verified
+        if(page.auth=='admin') return $admin
+        warning('Could not find authorisation, look in Menu.svelte')
+    }
 </script>
 
 <ul>
 	{#each pages as page}
-        {#if user || page.public}
+        {#if isAuthorized(page)}
             <li><a href="{page.url}">{page.name}</a></li>
         {:else}
             <li class='disabled' on:click={()=>{alert('Connectez vous pour accéder à ces foncionnalités')}}><a href="{page.url}">{page.name}</a></li>

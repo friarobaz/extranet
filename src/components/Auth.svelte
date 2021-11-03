@@ -4,45 +4,32 @@
     import Routes from './Routes.svelte'
     import Menu from '../components/Menu.svelte'
     import LoginStatus from '../components/loginStatus.svelte'
-    import {currentUser} from '../utils/stores'
-
-    let user, email, verified
-    $: email = user ? user.email : null
-    $: verified = user ? user.emailVerified : null
-    onAuthStateChanged(getAuth(), (userObj)=>{
-		console.log('auth state changed')
-    console.log(userObj)
-		user = userObj
-    $currentUser = userObj
-      if(userObj){
-        userObj.getIdTokenResult()
-      .then((idTokenResult) => {
-     // Confirm the user is an Admin.
-     if (!!idTokenResult.claims.admin) {
-       // Show admin UI.
-       console.log('is an admin')
-     } else {
-       // Show regular user UI.
-       console.log('is NOT an admin')
-     }
-  })
-  .catch((error) => {
-    console.log(error);
-  });
+    import {currentUser, loggedin, verified, admin} from '../utils/stores'
+    import {info, check, success, warning} from '../utils/log'
+    
+    onAuthStateChanged(getAuth(), (usr)=>{
+      info('👤 Auth state changed')
+      $currentUser = usr
+      $loggedin = !!usr
+      $verified = usr ? usr.emailVerified : false
+      if(usr){
+        usr.getIdTokenResult().then(res => $admin = !!res.claims.admin)
+      }else{
+        $admin = false
       }
-
-
-
-
-    replace($location) //refresh
-	})
+      replace($location) //refresh
+	  })
 </script>
+user: {$currentUser}
+{#if $loggedin}
+  email: {$currentUser.email}
+{/if}
 
-user: {email}
-verified: {verified}
+verified: {$verified}
+admin: {$admin}
 <hr>
-<LoginStatus bind:user={user} />
-<Menu bind:user={user}/>
+<LoginStatus />
+<Menu />
 <hr>
-<Routes bind:user={user}/>
+<Routes />
 

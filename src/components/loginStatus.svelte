@@ -1,11 +1,10 @@
 <script>
     import LogoutButton from './LogoutButton.svelte'
-    export let user = undefined
+    import {currentUser, loggedin} from '../utils/stores'
 </script>
 
-{#if user}
-	<div>{user.email} <LogoutButton /></div>
-    
+{#if $loggedin}
+	<div>{$currentUser.email} <LogoutButton /></div>
 {:else}
 <div>
     Vous n'êtes pas connectés.

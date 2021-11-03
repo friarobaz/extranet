@@ -3,24 +3,27 @@
     import EmailForm from "../components/EmailForm.svelte"
     import PasswordForm from "../components/PasswordForm.svelte"
     import ErrorMessage from "../components/ErrorMessage.svelte"
+    import {info, check, success, warning} from '../utils/log'
     const auth = getAuth();
     let email
     let password = ''
-    let error = null
+    let errorCode = null
     
     const handleClick = (e) => {
         e.preventDefault()
-        console.log(`trying to loggin : ${email}`)
+        check(`trying to loggin : ${email}`)
         signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-            console.log(`Logged in as ${email}`)
+            success(`Logged in as ${email}`)
             console.log(userCredential.user)
             email = ''
             password = ''
+            errorCode = null
         })
-        .catch((e) => {
-            console.error(e)
-            error = e.code
+        .catch((error) => {
+            warning('Could not login')
+            errorCode = error.code
+            throw error
         });
     }  
 </script>
@@ -31,7 +34,7 @@
     <PasswordForm bind:password={password}/>
     <br>
     <button on:click={handleClick}>Se connecter</button>
-    {#if error}
-        <ErrorMessage code={error}/>
+    {#if errorCode}
+        <ErrorMessage code={errorCode}/>
     {/if}
 </form>

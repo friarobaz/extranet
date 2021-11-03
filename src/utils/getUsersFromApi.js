@@ -1,19 +1,18 @@
 import { getDataFromApi } from "./getDataFromApi"
 import { check, success, warning } from "./log"
-const LOG_INDENT = 1
 
-export const getUsersFromApi = async () => {
+export const getUsersFromApi = async (parent_indent = 0) => {
+  const indent = parent_indent + 1
   const url = `/.netlify/functions/get-users?id=7421`
-  check(`Getting users from API`, LOG_INDENT)
+  check(`Getting users from API`, indent)
   try {
-    const data = await getDataFromApi(url)
+    const data = await getDataFromApi(url, indent)
     const users = data.users
-    success(`Found ${users.length} users`, LOG_INDENT)
+    success(`Found ${users.length} users`, indent)
     console.log(users)
     return users
   } catch (error) {
-    warning("Users not found", LOG_INDENT)
-    console.error(error)
-    return
+    warning("Users not found", indent)
+    throw error
   }
 }

@@ -10,7 +10,7 @@
         console.log(result);
     })
     }
-
+    
     /* firebase.auth().currentUser.getIdTokenResult()
   .then((idTokenResult) => {
      // Confirm the user is an Admin.
