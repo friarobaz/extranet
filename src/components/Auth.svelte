@@ -19,7 +19,7 @@
         $admin = false
       }
       userStoreUpToDate = true
-      replace($location) //refresh
+      if(!usr) replace($location) //refresh
 	  })
 </script>
 user: {$currentUser}

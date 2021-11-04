@@ -1,11 +1,14 @@
 import { doc, getDoc } from "firebase/firestore"
 import { db } from "./firebase"
 import { check, success, warning } from "./log"
-const LOG_INDENT = 1
 
-export const getUserFromFirestore = async (userId, log = false) => {
-  if (!userId) return
-  if (log) check(`Getting user from Firestore ID: ${userId}`, LOG_INDENT)
+export const getUserFromFirestore = async (
+  userId,
+  parentIndent = 0,
+  log = false
+) => {
+  const indent = parentIndent + 1
+  if (log) check(`Getting user from Firestore ID: ${userId}`, indent)
 
   try {
     const docRef = doc(db, "users", userId.toString())
@@ -13,16 +16,14 @@ export const getUserFromFirestore = async (userId, log = false) => {
     if (docSnap.exists()) {
       const user = docSnap.data()
       if (!log) console.log("user found")
-      if (log)
-        success(`User found: ${user.firstName} ${user.lastName}`, LOG_INDENT)
+      if (log) success(`User found: ${user.firstName} ${user.lastName}`, indent)
       //console.log(user)
       return user
     } else {
-      throw "User not found"
+      throw `Utilisateur non trouvé pour l'ID: ${userId}`
     }
   } catch (error) {
-    console.error(error)
-    warning(`User not found ID:${userId}`, LOG_INDENT)
-    throw "Utilateur non trouvé"
+    warning(`User not found ID:${userId}`, indent)
+    throw error
   }
 }

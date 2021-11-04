@@ -1,15 +1,15 @@
 <script>
     import { getUserFromFirestore } from "../utils/getUserFromFirestore"
+    import ErrorMessage from "./ErrorMessage.svelte";
     import _ from "lodash"
     export let userId = null
     $: user = null
     $: error = null
     let f
     $: if(user) {f = user.sex == 'female'}
-    getUserFromFirestore(userId).then((usr)=>{
+    getUserFromFirestore(userId, 0, true).then((usr)=>{
         user = usr
-        console.log('success')
-    }).catch(e=>error = e)
+    }).catch(e=>{error = e})
 </script>
 
 {#if userId}
@@ -19,7 +19,7 @@
         <div>Inscrit{#if f}e{/if} le : {user.signupDate}</div>
     {:else}
         {#if error}
-            <div style="color:red">{error}</div>
+            <ErrorMessage error={error}/>
         {:else}
             ...
         {/if}

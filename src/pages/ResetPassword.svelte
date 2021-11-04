@@ -23,7 +23,7 @@ const handleClick = async (e) => {
     } catch (e) {
         emailSent = false
         console.error(e)
-        error = e.code
+        error = e
     } 
     // Obtain code from user.
     //await confirmPasswordReset(email, code);
@@ -40,7 +40,7 @@ const handleClick = async (e) => {
         Un email vous a été envoyé, consultez votre boite mail.
     </h4>
     {#if error}
-        <ErrorMessage code={error}/>
+        <ErrorMessage error={error}/>
     {/if}
 </form>
 

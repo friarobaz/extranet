@@ -1,6 +1,5 @@
 <script>
-    export let message = ''
-    export let code = null
+    export let error = null
 
     const translateError = (errorCode) => {
         if (!errorCode) return
@@ -12,13 +11,14 @@
     }
 </script>
 
-{#if message}
-	<p>{message}</p>
+{#if error}
+    {#if error.code}
+	    <p>{translateError(code)}</p>
+    {:else}
+        <p>{error}</p>
+    {/if}
 {/if}
 
-{#if code}
-	<p>{translateError(code)}</p>
-{/if}
 
 <style>
     p{

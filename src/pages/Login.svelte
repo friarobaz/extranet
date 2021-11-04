@@ -7,7 +7,7 @@
     const auth = getAuth();
     let email
     let password = ''
-    let errorCode = null
+    let error = null
     
     const handleClick = (e) => {
         e.preventDefault()
@@ -34,7 +34,5 @@
     <PasswordForm bind:password={password}/>
     <br>
     <button on:click={handleClick}>Se connecter</button>
-    {#if errorCode}
-        <ErrorMessage code={errorCode}/>
-    {/if}
+    <ErrorMessage error={error}/>
 </form>

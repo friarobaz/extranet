@@ -14,13 +14,13 @@ export const updateFirestore = async (parent_indent = 0) => {
     for (const apiUser of apiUsers) {
       const id = apiUser.id.$value
       const formatted = formatApiUser(apiUser)
-      const firestoreUser = await getUserFromFirestore(id)
+      const firestoreUser = await getUserFromFirestore(id, indent)
       if (!firestoreUser) {
         warning("User not found in Firestore, adding it now", indent)
         const userRef = doc(db, "users", id)
         await setDoc(userRef, formatted, { merge: true })
       } else {
-        const changes = getUserChanges(formatted, firestoreUser)
+        const changes = getUserChanges(formatted, firestoreUser, indent)
         if (changes) {
           check(`Updating firestore for user ID: ${id}`, indent)
           const userRef = doc(db, "users", id)

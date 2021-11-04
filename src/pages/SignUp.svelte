@@ -22,7 +22,7 @@
         })
         .catch((e) => {
             console.error(e)
-            error = e.code
+            error = e
         });
     }  
 </script>
@@ -37,6 +37,6 @@
         Inscription réussie.
     </h4>
     {#if error}
-        <ErrorMessage code={error}/>
+        <ErrorMessage error={error}/>
     {/if}
 </form>

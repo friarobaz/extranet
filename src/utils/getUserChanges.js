@@ -1,7 +1,6 @@
 import { check, success, warning, black } from "./log"
 import _ from "lodash"
 
-const LOG_INDENT = 0
 const CAF_FIELDS = [
   "accidentContact",
   "activities",
@@ -26,21 +25,31 @@ const CAF_FIELDS = [
   "userId",
 ]
 
-export const getUserChanges = (apiUser, firestoreUser, log = false) => {
-  if (!apiUser || !firestoreUser) return
-  if (log) check("Looking for changes in user", LOG_INDENT)
+export const getUserChanges = (
+  apiUser,
+  firestoreUser,
+  parentIndent,
+  log = false
+) => {
+  const indent = parentIndent + 1
+  if (log) check("Looking for changes in user", indent)
   let changes = []
-  for (const field of CAF_FIELDS) {
-    if (!_.isEqual(apiUser[field], firestoreUser[field])) {
-      changes.push(field)
+  try {
+    for (const field of CAF_FIELDS) {
+      if (!_.isEqual(apiUser[field], firestoreUser[field])) {
+        changes.push(field)
+      }
     }
-  }
-  if (!changes.length) {
-    if (log) success("No changes found, user is up to date", LOG_INDENT)
-    return null
-  } else {
-    warning(`Found ${changes.length} change(s)`, LOG_INDENT)
-    console.log(changes)
-    return changes
+    if (changes.length == 0) {
+      if (log) success("No changes found, user is up to date", indent)
+      return null
+    } else {
+      warning(`Found ${changes.length} change(s) for ID: ${apiUser.id}`, indent)
+      console.log(changes)
+      return changes
+    }
+  } catch (error) {
+    warning("Error while looking for changes", indent)
+    throw error
   }
 }
