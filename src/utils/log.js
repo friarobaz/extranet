@@ -1,20 +1,18 @@
-const SPACE = " "
 const FONT_SIZE = 0.8
-const INDENT_SIZE = 4
 
-export const success = (msg, spaces = 0) => {
+export const success = (msg) => {
   const css = `color: green; font-size:${FONT_SIZE}rem`
-  console.log(`%c${SPACE.repeat(spaces * INDENT_SIZE)}✅ ${msg}`, css)
+  console.log(`%c✅ ${msg}`, css)
 }
 
-export const check = (msg, spaces = 0) => {
+export const check = (msg) => {
   const css = `color: darkorange; font-size:${FONT_SIZE}rem`
-  console.log(`%c${SPACE.repeat(spaces * INDENT_SIZE)}⌛ ${msg}`, css)
+  console.log(`%c⌛ ${msg}`, css)
 }
 
-export const warning = (msg, spaces = 0) => {
+export const warning = (msg) => {
   const css = `color: red; font-size:${FONT_SIZE}rem`
-  console.log(`%c${SPACE.repeat(spaces * INDENT_SIZE)}❌ ${msg}`, css)
+  console.log(`%c❌ ${msg}`, css)
 }
 
 export const black = (msg) => {
@@ -22,7 +20,7 @@ export const black = (msg) => {
   console.log(`%c🔘          ${msg}          🔘`, css)
 }
 
-export const info = (msg, spaces = 0) => {
+export const info = (msg) => {
   const css = `color: blue; font-size:${FONT_SIZE}rem`
-  console.log(`%c${SPACE.repeat(spaces * INDENT_SIZE)}${msg}`, css)
+  console.log(`%c${msg}`, css)
 }

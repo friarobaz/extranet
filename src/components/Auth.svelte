@@ -14,21 +14,26 @@
       $loggedin = !!usr
       $verified = usr ? usr.emailVerified : false
       if(usr){
-        usr.getIdTokenResult().then(res => $admin = !!res.claims.admin)
+        //usr.getIdTokenResult().then(res => console.log(res.claims))
+        usr.getIdTokenResult().then(res => {
+          $admin = !!res.claims.admin
+          userStoreUpToDate = true
+        })
       }else{
         $admin = false
+        userStoreUpToDate = true
+        replace($location) //refresh
       }
-      userStoreUpToDate = true
-      if(!usr) replace($location) //refresh
+      
 	  })
 </script>
 user: {$currentUser}
 {#if $loggedin}
   email: {$currentUser.email}
 {/if}
-
 verified: {$verified}
 admin: {$admin}
+
 <hr>
 <LoginStatus />
 <Menu />

@@ -82,7 +82,7 @@ USERS
     <ul>
         {#each users as user}
             <li class:female={user.sex=='female'}>
-                <div>{user.firstName} {user.lastName}</div>
+                <div>{user.firstName} {user.lastName} {user.email}</div>
             </li>
             
         {/each}

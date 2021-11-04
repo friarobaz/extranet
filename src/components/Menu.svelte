@@ -11,7 +11,8 @@
         {name: 'Vérifier email', url: '#/verifyEmail', auth:'loggedin'},
         {name: 'Users', url: '#/users', auth:'verified'},
         {name: 'Update', url: '#/updateFirestore', auth:'admin'},
-        {name: 'Test', url: '#/test', auth:'public'},
+        {name: 'Rendre admin', url: '#/makeAdmin', auth:'admin'},
+        {name: 'Mes profils', url: '#/myProfiles', auth:'verified'},
     ]
     $:isAuthorized = (page) => {
         if(page.auth=='public') return true

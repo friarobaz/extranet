@@ -25,14 +25,8 @@ const CAF_FIELDS = [
   "userId",
 ]
 
-export const getUserChanges = (
-  apiUser,
-  firestoreUser,
-  parentIndent,
-  log = false
-) => {
-  const indent = parentIndent + 1
-  if (log) check("Looking for changes in user", indent)
+export const getUserChanges = (apiUser, firestoreUser, log = true) => {
+  if (log) check("Looking for changes in user")
   let changes = []
   try {
     for (const field of CAF_FIELDS) {
@@ -41,15 +35,15 @@ export const getUserChanges = (
       }
     }
     if (changes.length == 0) {
-      if (log) success("No changes found, user is up to date", indent)
+      if (log) success("No changes found, user is up to date")
       return null
     } else {
-      warning(`Found ${changes.length} change(s) for ID: ${apiUser.id}`, indent)
+      warning(`Found ${changes.length} change(s) for ID: ${apiUser.id}`)
       console.log(changes)
       return changes
     }
   } catch (error) {
-    warning("Error while looking for changes", indent)
+    warning("Error while looking for changes")
     throw error
   }
 }

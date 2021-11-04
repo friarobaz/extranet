@@ -11,8 +11,10 @@
     import User from "../pages/User.svelte";
     import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import UpdateFirestore from "../pages/UpdateFirestore.svelte";
-    import Test from "../pages/Test.svelte";
+    import Test from "../pages/MakeAdmin.svelte";
     import {check, success, warning} from '../utils/log'
+import MakeAdmin from "../pages/MakeAdmin.svelte";
+import MyProfiles from "../pages/MyProfiles.svelte";
     
     const isLoggedIn = () =>{
       if (!$loggedin) {
@@ -73,8 +75,12 @@
       url: '/updateFirestore',component: UpdateFirestore, conditions : [isAdmin]
     },
     {
-      url: '/test',component: Test, conditions : []
+      url: '/makeAdmin',component: MakeAdmin, conditions : [isAdmin]
     },
+    {
+      url: '/myProfiles',component: MyProfiles, conditions : [isVerified]
+    },
+    
     ]
 
     const makeRoutes = () => {

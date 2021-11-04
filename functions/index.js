@@ -31,6 +31,7 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
 })
 
 exports.removeAdminRole = functions.https.onCall((data, context) => {
+  // check user is not null
   if (!context.auth) {
     return { errorInfo: "Vous devez être connecté pour faire ca" }
   }
@@ -49,7 +50,7 @@ exports.removeAdminRole = functions.https.onCall((data, context) => {
     })
     .then(() => {
       return {
-        message: `${data.email} n'est plus administrateur`,
+        message: `${data.email} n'est  plus administrateur`,
       }
     })
     .catch((err) => {

@@ -17,6 +17,7 @@
         <div>ID: {user.id}</div>
         <div>{_.capitalize(user.firstName)} {user.lastName}</div>
         <div>Inscrit{#if f}e{/if} le : {user.signupDate}</div>
+        <div>Email: {user.email}</div>
     {:else}
         {#if error}
             <ErrorMessage error={error}/>

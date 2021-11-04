@@ -10,9 +10,9 @@
     }
 </script>
 
-<label for="password">Mot de passe :</label>
-<input type="password" bind:value={password} required id="password" on:focus={handleFocus} class:default={!focus}/>
-
+<label>Mot de passe :
+    <input type="password" bind:value={password} required on:focus={handleFocus} class:default={!focus}/>
+</label>
 
 <style>
     .default{

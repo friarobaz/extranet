@@ -10,9 +10,9 @@
     }
 </script>
 
-<label for="email">Adresse email :</label>
-<input type="email" bind:value={email} required id="email" on:focus={handleFocus} class:default={!focus}/>
-
+<label>Adresse email :
+    <input type="email" bind:value={email} required id="email" on:focus={handleFocus} class:default={!focus}/>
+</label>
 
 <style>
     .default{
