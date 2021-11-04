@@ -3,8 +3,11 @@ const admin = require("firebase-admin")
 admin.initializeApp()
 
 exports.addAdminRole = functions.https.onCall((data, context) => {
+  // check user is not null
+  if (!context.auth) {
+    return { errorInfo: "Vous devez être connecté pour faire ca" }
+  }
   // check request is made by an admin
-  console.log(context.auth.token)
   if (context.auth.token.admin !== true) {
     return { errorInfo: "If faut être admin pour ajouter un admin" }
   }
@@ -28,8 +31,10 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
 })
 
 exports.removeAdminRole = functions.https.onCall((data, context) => {
+  if (!context.auth) {
+    return { errorInfo: "Vous devez être connecté pour faire ca" }
+  }
   // check request is made by an admin
-  console.log(context.auth.token)
   if (context.auth.token.admin !== true) {
     return { errorInfo: "If faut être admin pour supprimer un admin" }
   }
