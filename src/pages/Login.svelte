@@ -18,12 +18,12 @@
             console.log(userCredential.user)
             email = ''
             password = ''
-            errorCode = null
+            error = null
         })
-        .catch((error) => {
+        .catch((err) => {
             warning('Could not login')
-            errorCode = error.code
-            throw error
+            error = err
+            throw err
         });
     }  
 </script>

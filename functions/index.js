@@ -6,7 +6,7 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
   // check request is made by an admin
   console.log(context.auth.token)
   if (context.auth.token.admin !== true) {
-    return { error: "Only admins can add other admins" }
+    return { errorInfo: "If faut être admin pour ajouter un admin" }
   }
   // get user and add admin custom claim
   return admin
@@ -19,7 +19,32 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
     })
     .then(() => {
       return {
-        message: `Success! ${data.email} has been made an admin.`,
+        message: `${data.email} est maintenant administrateur`,
+      }
+    })
+    .catch((err) => {
+      return err
+    })
+})
+
+exports.removeAdminRole = functions.https.onCall((data, context) => {
+  // check request is made by an admin
+  console.log(context.auth.token)
+  if (context.auth.token.admin !== true) {
+    return { errorInfo: "If faut être admin pour supprimer un admin" }
+  }
+  // get user and add admin custom claim
+  return admin
+    .auth()
+    .getUserByEmail(data.email)
+    .then((user) => {
+      return admin.auth().setCustomUserClaims(user.uid, {
+        admin: false,
+      })
+    })
+    .then(() => {
+      return {
+        message: `${data.email} n'est plus administrateur`,
       }
     })
     .catch((err) => {

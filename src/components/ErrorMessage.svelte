@@ -13,7 +13,7 @@
 
 {#if error}
     {#if error.code}
-	    <p>{translateError(code)}</p>
+	    <p>{translateError(error.code)}</p>
     {:else}
         <p>{error}</p>
     {/if}

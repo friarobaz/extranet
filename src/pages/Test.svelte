@@ -1,32 +1,55 @@
 <script>
     import { httpsCallable } from "firebase/functions"
     import { functions } from '../utils/firebase'
+    import ErrorMessage from '../components/ErrorMessage.svelte'
 
     const addAdminRole = httpsCallable(functions, 'addAdminRole');
-    
+    const removeAdminRole = httpsCallable(functions, 'removeAdminRole');
+    let email = ''
+    let error = null
+    let error2 = null
+    let waitingMessage = ''
 
-    const handleClick = () => {
-        addAdminRole({ email: 'friarobaz@gmail.com' }).then(result => {
-        console.log(result);
-    })
+    const handleAdd = () => {
+        waitingMessage = 'Merci de patientez...'
+        error = null
+        addAdminRole({ email: email }).then(result => {
+            waitingMessage = ''
+            console.log(result.data);
+            if(result.data.errorInfo) {
+              error = result.data.errorInfo
+            }else{
+             console.log('No erros ?')
+            }
+        }).catch(err=>{
+            waitingMessage = ''
+            error2 = err
+            console.error(err)
+        })
     }
-    
-    /* firebase.auth().currentUser.getIdTokenResult()
-  .then((idTokenResult) => {
-     // Confirm the user is an Admin.
-     if (!!idTokenResult.claims.admin) {
-       // Show admin UI.
-       console.log('is an admin')
-     } else {
-       // Show regular user UI.
-       console.log('is NOT an admin')
-     }
-  })
-  .catch((error) => {
-    console.log(error);
-  }); */
-
+    const handleRemove = () => {
+        waitingMessage = 'Merci de patientez...'
+        error = null
+        removeAdminRole({ email: email }).then(result => {
+            waitingMessage = ''
+            console.log(result.data);
+            if(result.data.errorInfo) {
+                error = result.data.errorInfo
+            }else{
+                console.log('No erros ?')
+            }
+        }).catch(err=>{
+            waitingMessage = ''
+            error2 = err
+            console.error(err)
+        })
+    }
   
 </script>
 
-<button on:click={handleClick}>MAKE ADMIN</button>
+<input type="text" bind:value={email}>
+<button on:click={handleAdd}>MAKE ADMIN</button>
+<button on:click={handleRemove}>REMOVE ADMIN</button>
+<div>{waitingMessage}</div>
+<ErrorMessage error={error} />
+<ErrorMessage error={error2} />
