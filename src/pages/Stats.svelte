@@ -37,7 +37,9 @@
                     <PieChart data={stat} />
                 </div>
             {:else if stat.chart == 'bar'}
-                <BarChart data={stat} />
+                <div style='max-width:1000px'>
+                    <BarChart data={stat} />
+                </div>
             {:else}
                 pas de chart connue
             {/if}
