@@ -7,6 +7,8 @@
     import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import {info, check, success, warning} from '../utils/log'
     
+    
+    const TEST = false
     let userStoreUpToDate = false
     onAuthStateChanged(getAuth(), (usr)=>{
       info('👤 Auth state changed')
@@ -27,17 +29,21 @@
       
 	  })
 </script>
-user: {$currentUser}
-{#if $loggedin}
-  email: {$currentUser.email}
+{#if TEST}
+    user: {$currentUser}
+  {#if $loggedin}
+    email: {$currentUser.email}
+  {/if}
+  verified: {$verified}
+  admin: {$admin}
+  <hr>
+  <LoginStatus />
+  <Menu />
+  <hr>
 {/if}
-verified: {$verified}
-admin: {$admin}
 
-<hr>
-<LoginStatus />
-<Menu />
-<hr>
+
+
 
 {#if userStoreUpToDate}
   <Routes />

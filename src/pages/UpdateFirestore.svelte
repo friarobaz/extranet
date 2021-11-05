@@ -1,5 +1,6 @@
 <script>
-    import { updateFirestore, updateStats } from "../utils/updateFirestore"
+    import { updateFirestore } from "../utils/updateFirestore"
+    import { updateStats } from '../utils/stats'
     import ErrorMessage from '../components/ErrorMessage.svelte'
 
     let error = null

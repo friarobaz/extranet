@@ -3,7 +3,7 @@ import { getUserChanges } from "./getUserChanges"
 import { getUserFromFirestore } from "./getUserFromFirestore"
 import { getUsersFromApi } from "./getUsersFromApi"
 import { check, success, warning } from "./log"
-import { makeStats } from "./stats"
+import { makeStats, updateStats } from "./stats"
 import {
   doc,
   setDoc,
@@ -98,35 +98,6 @@ const deleteUser = async (userObj) => {
     console.groupEnd()
   } catch (error) {
     warning(`Could not delete user id: ${userObj.id}`)
-    throw error
-  }
-}
-
-export const updateStats = async (users) => {
-  console.group()
-  check("Updating stats")
-  try {
-    //get old stats
-    const snapshot = await getDoc(doc(db, "stats", "lastUpdate"))
-    const previousUpdate = snapshot.data()
-
-    //save them as backup
-    await addDoc(collection(db, "stats"), previousUpdate)
-
-    //if function was called without users, get them from firestore
-    if (!users) {
-      users = await getUsersFromFirestore()
-    }
-    //create new set of stats
-    const currentUpdate = await makeStats(users)
-
-    //save them to Firestore
-    await setDoc(doc(db, "stats", "lastUpdate"), currentUpdate)
-
-    success("Stats updated")
-    console.groupEnd()
-  } catch (error) {
-    warning("Could not update stats")
     throw error
   }
 }

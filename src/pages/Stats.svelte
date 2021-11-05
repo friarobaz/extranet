@@ -1,44 +1,55 @@
 <script>
     import { db } from '../utils/firebase'
     import { doc, getDoc } from "firebase/firestore"
-    import { updateStats } from "../utils/updateFirestore"
-    import Chart from '../components/Chart.svelte'
+    import { formatStats } from '../utils/stats'
+    import PieChart from '../components/Charts/PieChart.svelte'
+    import BarChart from '../components/Charts/BarChart.svelte'
 
-    let stats = null
+    
+    let recentUsers = 0
     const getStats = async () => {
         const docRef = doc(db, "stats", "lastUpdate")
         const docSnap = await getDoc(docRef)
+        let stats = null
         if (docSnap.exists()) {
             stats = docSnap.data()
         }
         console.log(stats)
-        return stats
+        recentUsers = stats.recentUsers
+        return formatStats(stats)
     }
 
-    const handleClick2 = async ()=>{
-        try {
-            updateStats()
-        } catch (error) {
-            throw error
-        }
-    }
-    
+    let promise = getStats()
+
+
 </script>
 
-<div>
-    <h1>Statistiques</h1>
-    <button on:click={getStats}>Get stats</button>
-    <button on:click={handleClick2}>Update</button>
-    
-    {#if stats}
-        <ul>
-            <li>Date : {stats.date}</li>
-            <li>Heure : {stats.time}</li>
-            <li>Nombre d'utilisateurs : {stats.nbOfUsers}</li>
-            <li>Hommes : {stats.men}</li>
-            <li>Femmes : {stats.women}</li>
-        </ul>
-        <Chart men={stats.men} women={stats.women}/>
-    {/if}
-</div>
 
+<h1>Statistiques</h1>
+<div>Adhérents cette année: {recentUsers}</div>
+{#await promise}
+    <p>Patientez...</p>
+{:then stats} 
+    {#each stats as stat}
+        <div class='chart'>
+            {#if stat.chart == 'pie'}
+                <div style='max-width:200px'>
+                    <PieChart data={stat} />
+                </div>
+            {:else if stat.chart == 'bar'}
+                <BarChart data={stat} />
+            {:else}
+                pas de chart connue
+            {/if}
+        </div>
+    {/each}
+{/await}
+
+
+<style>
+    .chart{
+        /* height: 2000px; */
+        /* background: sandybrown; */
+        width: 100vw;
+    }
+</style>
