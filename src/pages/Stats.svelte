@@ -2,6 +2,8 @@
     import { db } from '../utils/firebase'
     import { doc, getDoc } from "firebase/firestore"
     import { updateStats } from "../utils/updateFirestore"
+    import Chart from '../components/Chart.svelte'
+
     let stats = null
     const getStats = async () => {
         const docRef = doc(db, "stats", "lastUpdate")
@@ -36,5 +38,7 @@
             <li>Hommes : {stats.men}</li>
             <li>Femmes : {stats.women}</li>
         </ul>
+        <Chart men={stats.men} women={stats.women}/>
     {/if}
 </div>
+
