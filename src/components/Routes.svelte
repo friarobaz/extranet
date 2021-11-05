@@ -15,6 +15,7 @@
     import {check, success, warning} from '../utils/log'
 import MakeAdmin from "../pages/MakeAdmin.svelte";
 import MyProfiles from "../pages/MyProfiles.svelte";
+import Stats from '../pages/Stats.svelte'
     
     const isLoggedIn = () =>{
       if (!$loggedin) {
@@ -79,6 +80,9 @@ import MyProfiles from "../pages/MyProfiles.svelte";
     },
     {
       url: '/myProfiles',component: MyProfiles, conditions : [isVerified]
+    },
+    {
+      url: '/stats',component: Stats, conditions : []
     },
     
     ]

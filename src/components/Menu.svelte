@@ -13,6 +13,7 @@
         {name: 'Update', url: '#/updateFirestore', auth:'admin'},
         {name: 'Rendre admin', url: '#/makeAdmin', auth:'admin'},
         {name: 'Mes profils', url: '#/myProfiles', auth:'verified'},
+        {name: 'Statistiques', url: '#/stats', auth:'public'},
     ]
     $:isAuthorized = (page) => {
         if(page.auth=='public') return true

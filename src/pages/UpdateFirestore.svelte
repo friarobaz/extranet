@@ -12,7 +12,7 @@
         }
     }
 
-    const handleClick3 = async () => {
+    const handleClick2 = async () => {
         try {
             await updateStats()
         } catch (err) {
@@ -26,7 +26,7 @@
 <button on:click={handleClick}>Mise à jour de la base de donnée Firestore</button>
 
 
-<button on:click={handleClick3}>Mise a jour des stats</button>
+<button on:click={handleClick2}>Mise a jour des stats</button>
 
 <ErrorMessage error={error}/>
 

@@ -3,6 +3,7 @@ import { getUserChanges } from "./getUserChanges"
 import { getUserFromFirestore } from "./getUserFromFirestore"
 import { getUsersFromApi } from "./getUsersFromApi"
 import { check, success, warning } from "./log"
+import { makeStats } from "./stats"
 import {
   doc,
   setDoc,
@@ -58,6 +59,9 @@ export const updateFirestore = async () => {
       }
     }
 
+    //update stats
+    await updateStats(firestoreUsers)
+
     success("Firestore database updated")
   } catch (error) {
     warning("Could not update Firestore")
@@ -81,52 +85,48 @@ const addUser = async (userObj) => {
   }
 }
 
-const deleteUser = async (user) => {
+const deleteUser = async (userObj) => {
   console.group()
-  if (!user.id) throw "User doesn't have an ID, delete manualy"
-  check(`Deleting Firestore user id: ${user.id}`)
+  if (!userObj.id) throw "User doesn't have an ID, delete manualy"
+  check(`Deleting Firestore user id: ${userObj.id}`)
   try {
     //creating backup
-    await setDoc(doc(db, "trash", user.id), user)
+    await setDoc(doc(db, "trash", userObj.id), userObj)
     //deleting
-    await deleteDoc(doc(db, "users", user.id))
+    await deleteDoc(doc(db, "users", userObj.id))
     success(`Deleted user`)
     console.groupEnd()
   } catch (error) {
-    warning(`Could not delete user id: ${user.id}`)
+    warning(`Could not delete user id: ${userObj.id}`)
     throw error
   }
 }
 
-export const updateStats = async () => {
-  const snap = await getDoc(doc(db, "stats", "lastUpdate"))
-  const previousUpdate = snap.data()
-  const currentUpdate = await makeStats()
-  await addDoc(collection(db, "stats"), previousUpdate)
-  await setDoc(doc(db, "stats", "lastUpdate"), currentUpdate)
-  success("Done ?")
-}
+export const updateStats = async (users) => {
+  console.group()
+  check("Updating stats")
+  try {
+    //get old stats
+    const snapshot = await getDoc(doc(db, "stats", "lastUpdate"))
+    const previousUpdate = snapshot.data()
 
-const makeStats = async () => {
-  // API
-  let apiIds = []
-  const apiUsers = await getUsersFromApi()
-  for (const user of apiUsers) {
-    apiIds.push(user.id.$value)
-  }
-  // Firestore
-  let firestoreIds = []
-  let oldIds = []
-  const snap = await getDocs(collection(db, "users"))
-  snap.forEach((user) => {
-    firestoreIds.push(user.id)
-    if (!apiIds.includes(user.id)) oldIds.push(user.id)
-  })
+    //save them as backup
+    await addDoc(collection(db, "stats"), previousUpdate)
 
-  return {
-    date: dayjs().format("YYYY-MM-DD"),
-    apiIds,
-    firestoreIds,
-    oldIds,
+    //if function was called without users, get them from firestore
+    if (!users) {
+      users = await getUsersFromFirestore()
+    }
+    //create new set of stats
+    const currentUpdate = await makeStats(users)
+
+    //save them to Firestore
+    await setDoc(doc(db, "stats", "lastUpdate"), currentUpdate)
+
+    success("Stats updated")
+    console.groupEnd()
+  } catch (error) {
+    warning("Could not update stats")
+    throw error
   }
 }
