@@ -14,6 +14,7 @@
         {name: 'Rendre admin', url: '#/makeAdmin', auth:'admin'},
         {name: 'Mes profils', url: '#/myProfiles', auth:'verified'},
         {name: 'Statistiques', url: '#/stats', auth:'public'},
+        {name: 'Test', url: '#/test', auth:'public'},
     ]
     $:isAuthorized = (page) => {
         if(page.auth=='public') return true

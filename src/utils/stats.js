@@ -3,6 +3,7 @@ import { getUsersFromFirestore } from "./getUsersFromFirestore"
 import { addDoc, setDoc, doc, getDoc } from "@firebase/firestore"
 import { db } from "./firebase"
 import { get } from "lodash"
+
 const ACTIVITIES = [
   "alpinisme",
   "canyon",
@@ -38,6 +39,7 @@ export const makeStats = async (users) => {
       women: recentUsers.filter((user) => user.sex == "female").length,
       men: recentUsers.filter((user) => user.sex == "male").length,
       activities: createAcitivitiesStats(recentUsers),
+      averageAge: getAverageAge(recentUsers),
     }
     console.log(stats)
     success("New stats created")
@@ -54,8 +56,11 @@ const createAcitivitiesStats = (users) => {
   for (const activity of ACTIVITIES) {
     activities.push(getActivityInfo(activity, users))
   }
-  const sorted = activities.sort((a, b) => b.nbOfUsers - a.nbOfUsers)
-  return sorted
+  return activities
+}
+
+const sort = (array, sortBy) => {
+  return array.sort((a, b) => b[sortBy] - a[sortBy])
 }
 
 const getActivityInfo = (activity, users) => {
@@ -67,7 +72,26 @@ const getActivityInfo = (activity, users) => {
     nbOfUsers: releventUsers.length,
     men: releventUsers.filter((user) => user.sex == "male").length,
     women: releventUsers.filter((user) => user.sex == "female").length,
+    averageAge: getAverageAge(releventUsers),
   }
+}
+
+const getAverageAge = (users) => {
+  if (!users) return null
+  const ages = users.map((user) => getAge(user))
+  const sum = ages.reduce((a, b) => a + b, 0)
+  const average = sum / ages.length || 0
+  return average
+}
+
+export const getAge = (user) => {
+  if (!user.dateOfBirth) return null
+  const birthday = dayjs(user.dateOfBirth, "YYYY-MM-DD")
+  const today = dayjs()
+  const age = today.diff(birthday, "year", true)
+  //keep one decimal
+  const roundedAge = Math.round(age * 10) / 10
+  return roundedAge
 }
 
 export const formatStats = (stats) => {
@@ -77,13 +101,29 @@ export const formatStats = (stats) => {
     numbers: [stats.men, stats.women],
     chart: "pie",
   }
-  const activities = {
-    title: "Activités",
-    labels: stats.activities.map((activity) => activity.name),
-    numbers: stats.activities.map((activity) => activity.nbOfUsers),
+
+  const usersPerActivity = {
+    title: "Nb d'adhérents par activité",
+    labels: sort(stats.activities, "nbOfUsers").map(
+      (activity) => activity.name
+    ),
+    numbers: sort(stats.activities, "nbOfUsers").map(
+      (activity) => activity.nbOfUsers
+    ),
     chart: "bar",
   }
-  return [sex, activities]
+  const averageAgePerActivity = {
+    title: "Age moyen par activité",
+    labels: sort(stats.activities, "averageAge").map(
+      (activity) => activity.name
+    ),
+    numbers: sort(stats.activities, "averageAge").map(
+      (activity) => activity.averageAge
+    ),
+    chart: "bar",
+  }
+
+  return [sex, usersPerActivity, averageAgePerActivity]
 }
 
 export const updateStats = async (users) => {

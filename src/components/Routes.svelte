@@ -11,11 +11,11 @@
     import User from "../pages/User.svelte";
     import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import UpdateFirestore from "../pages/UpdateFirestore.svelte";
-    import Test from "../pages/MakeAdmin.svelte";
     import {check, success, warning} from '../utils/log'
 import MakeAdmin from "../pages/MakeAdmin.svelte";
 import MyProfiles from "../pages/MyProfiles.svelte";
 import Stats from '../pages/Stats.svelte'
+import Test from '../pages/Test.svelte'
     
     const isLoggedIn = () =>{
       if (!$loggedin) {
@@ -83,6 +83,9 @@ import Stats from '../pages/Stats.svelte'
     },
     {
       url: '/stats',component: Stats, conditions : []
+    },
+    {
+      url: '/test',component: Test, conditions : []
     },
     
     ]

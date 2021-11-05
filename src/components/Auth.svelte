@@ -8,7 +8,7 @@
     import {info, check, success, warning} from '../utils/log'
     
     
-    const TEST = false
+    const TEST = true
     let userStoreUpToDate = false
     onAuthStateChanged(getAuth(), (usr)=>{
       info('👤 Auth state changed')

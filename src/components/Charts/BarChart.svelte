@@ -30,7 +30,10 @@
             indexAxis: 'y',
             scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: false
+            },
+            x: {
+                beginAtZero: false
             }
             }
         },
