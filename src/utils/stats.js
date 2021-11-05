@@ -67,12 +67,15 @@ const getActivityInfo = (activity, users) => {
   const releventUsers = users.filter((user) =>
     user.activities.includes(activity.toUpperCase())
   )
+  const men = releventUsers.filter((user) => user.sex == "male").length
+  const women = releventUsers.filter((user) => user.sex == "female").length
   return {
     name: activity,
     nbOfUsers: releventUsers.length,
-    men: releventUsers.filter((user) => user.sex == "male").length,
-    women: releventUsers.filter((user) => user.sex == "female").length,
+    men,
+    women,
     averageAge: getAverageAge(releventUsers),
+    womenRepresentation: (women / releventUsers.length) * 100,
   }
 }
 
@@ -81,7 +84,7 @@ const getAverageAge = (users) => {
   const ages = users.map((user) => getAge(user))
   const sum = ages.reduce((a, b) => a + b, 0)
   const average = sum / ages.length || 0
-  return average
+  return Math.round(average)
 }
 
 export const getAge = (user) => {
@@ -122,8 +125,18 @@ export const formatStats = (stats) => {
     ),
     chart: "bar",
   }
+  const womenPerActivity = {
+    title: "Pourcentage de femmes par activité",
+    labels: sort(stats.activities, "womenRepresentation").map(
+      (activity) => activity.name
+    ),
+    numbers: sort(stats.activities, "womenRepresentation").map(
+      (activity) => activity.womenRepresentation
+    ),
+    chart: "bar",
+  }
 
-  return [sex, usersPerActivity, averageAgePerActivity]
+  return [sex, usersPerActivity, averageAgePerActivity, womenPerActivity]
 }
 
 export const updateStats = async (users) => {
