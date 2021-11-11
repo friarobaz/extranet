@@ -65,3 +65,19 @@ export const getClub = async (client, auth, clubId) => {
     })
   })
 }
+
+export const getEvents = async (client, auth, clubId) => {
+  return new Promise((resolve, reject) => {
+    client.extractionSortiesClub(
+      { connect: auth, idclub: clubId },
+      (err, result) => {
+        if (err) {
+          console.log("get events error", err)
+          return reject(err)
+        }
+        const events = result.extractionSortiesClubReturn
+        resolve(events)
+      }
+    )
+  })
+}
