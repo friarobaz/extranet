@@ -15,6 +15,7 @@
         {name: 'Mes profils', url: '#/myProfiles', auth:'verified'},
         {name: 'Statistiques', url: '#/stats', auth:'public'},
         {name: 'Test', url: '#/test', auth:'public'},
+        {name: "Ecole d'escalade", url: '#/climbingLessons', auth:'public'},
     ]
     $:isAuthorized = (page) => {
         if(page.auth=='public') return true

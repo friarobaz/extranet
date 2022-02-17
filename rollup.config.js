@@ -104,4 +104,12 @@ export default [
       dir: "API/functions",
     },
   },
+  {
+    input: "API/src/get-events.js",
+    output: {
+      sourcemap: true,
+      format: "cjs",
+      dir: "API/functions",
+    },
+  },
 ]

@@ -1,8 +1,9 @@
 <script>
+	import {firebaseApp} from './utils/firebase'
 	import Auth from './components/Auth.svelte'
 	
 	
-	import { getUserFromApi } from './utils/getUserFromApi'
+	/* import { getUserFromApi } from './utils/getUserFromApi'
 	import { updateFirestore } from './utils/updateFirestore'
 	import { getUserChanges } from './utils/getUserChanges'
 
@@ -17,7 +18,7 @@ import { formatApiUser } from './utils/formatApiUser';
 		const firebase = await getUserFromFirestore(742120190080)
 		
 		getUserChanges(formatted, firebase)
-	}
+	} */
 
 	//run()
 	//isUserUpToDate(742120190080)
@@ -34,15 +35,5 @@ import { formatApiUser } from './utils/formatApiUser';
 
 
 <style>
-	main {
-		text-align: center;
-		display: grid;
-		justify-content: center;
-	}
-
-	@media (min-width: 640px) {
-		main {
-			max-width: none;
-		}
-	}
+	
 </style>

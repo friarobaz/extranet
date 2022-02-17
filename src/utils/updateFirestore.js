@@ -19,8 +19,8 @@ import { getUsersFromFirestore } from "./getUsersFromFirestore"
 
 export const updateFirestore = async () => {
   check("Updating Firestore")
+  check("Looking for changes or new users in API")
   try {
-    check("Checking API users")
     //get all users from API
     const apiUsers = await getUsersFromApi()
 
@@ -32,10 +32,13 @@ export const updateFirestore = async () => {
       const formatted = formatApiUser(apiUser)
 
       //check if user exists in Firestore
-      const firestoreUser = await getUserFromFirestore(id, false)
+      let firestoreUser = await getUserFromFirestore(id, false)
 
       //if it doesn't exist, create it
-      if (firestoreUser === null) await addUser(formatted)
+      if (firestoreUser === null) {
+        await addUser(formatted)
+        firestoreUser = await getUserFromFirestore(id, false)
+      }
 
       //look for differences bewteen API user and Firestore user
       const changes = getUserChanges(formatted, firestoreUser, false)
@@ -43,9 +46,7 @@ export const updateFirestore = async () => {
       //if differences are found, update Firestore user
       if (changes) await addUser(formatted)
     }
-
-    check("Checking Firestore users")
-
+    check("Checking for Firestore users that are not in the API")
     //list of all user IDs in API
     const apiIds = apiUsers.map((user) => user.id.$value)
 
@@ -58,9 +59,11 @@ export const updateFirestore = async () => {
         await deleteUser(user)
       }
     }
-
     //update stats
     await updateStats(firestoreUsers)
+
+    //update list of ids
+    //await updateListOfIds(firestoreUsers)
 
     success("Firestore database updated")
   } catch (error) {
@@ -98,6 +101,26 @@ const deleteUser = async (userObj) => {
     console.groupEnd()
   } catch (error) {
     warning(`Could not delete user id: ${userObj.id}`)
+    throw error
+  }
+}
+
+const updateListOfIds = async (users) => {
+  console.group()
+  check(`Updating list of ids`)
+  if (!users) throw "No users to update ids"
+  try {
+    for (const user of users) {
+      const id = user.id
+      const name = user.name
+      const fef = doc(db, "public", "ids")
+      const obj = { [id]: name }
+      await setDoc(userRef, userObj, { merge: true })
+      success(`Updated list of ids`)
+    }
+    console.groupEnd()
+  } catch (error) {
+    warning(`Could not create Firestore user`)
     throw error
   }
 }

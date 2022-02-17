@@ -1,4 +1,5 @@
 <script>
+    
     import { getAuth, onAuthStateChanged } from "firebase/auth";
     import {replace, location} from 'svelte-spa-router'
     import Routes from './Routes.svelte'

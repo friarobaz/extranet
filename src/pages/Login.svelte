@@ -29,10 +29,14 @@
 </script>
 
 <form>
-    <h3>Se connecter</h3>
+    <h1>Se connecter</h1>
     <EmailForm bind:email={email}/>
     <PasswordForm bind:password={password}/>
     <br>
-    <button on:click={handleClick}>Se connecter</button>
+    <button on:click={handleClick}>se connecter</button>
     <ErrorMessage error={error}/>
 </form>
+
+<style>
+
+</style>

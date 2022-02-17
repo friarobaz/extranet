@@ -1,3 +1,32 @@
+:root {
+  --primaryHue: 200;
+  --primarySaturation: 50%;
+  --primaryLightness: 70%;
+  --secondaryHue: 710;
+  --secondarySaturation: 50%;
+  --secondaryLightness: 50%;
+  --white: var(--primaryHue), var(--primarySaturation), 98%;
+  --black: var(--primaryHue), var(--primarySaturation), 15%;
+
+  --color-primary: var(--primaryHue), var(--primarySaturation),
+    var(--primaryLightness);
+
+  --color-primary-light: var(--primaryHue), var(--primarySaturation),
+    calc(var(--primaryLightness) + 15%);
+
+  --color-primary-dark: var(--primaryHue), var(--primarySaturation),
+    calc(var(--primaryLightness) - 15%);
+
+  --color-secondary: var(--secondaryHue), var(--secondarySaturation),
+    var(--secondaryLightness);
+
+  --color-secondary-light: var(--secondaryHue), var(--secondarySaturation),
+    calc(var(--secondaryLightness) + 15%);
+
+  --color-secondary-dark: var(--secondaryHue), var(--secondarySaturation),
+    calc(var(--secondaryLightness) - 15%);
+}
+
 html,
 body {
   position: relative;
@@ -6,9 +35,11 @@ body {
 }
 
 body {
-  color: #333;
+  font-size: 0.9rem;
+  color: hsl(var(--black));
   margin: 0;
-  padding: 8px;
+  padding: 2rem;
+  background: hsl(var(--white));
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
@@ -27,10 +58,6 @@ a:visited {
   color: rgb(0, 80, 160);
 }
 
-label {
-  display: block;
-}
-
 input,
 button,
 select,
@@ -41,8 +68,24 @@ textarea {
   padding: 0.4em;
   margin: 0 0 0.5em 0;
   box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
+  border: 0px;
+  border-radius: 4px;
+}
+
+input,
+select {
+  box-shadow: 0.5px 0.7px 5.3px rgba(0, 0, 0, 0.02),
+    2px 2.2px 17.9px rgba(0, 0, 0, 0.03), 4.8px 5px 80px rgba(0, 0, 0, 0.05);
+
+  margin-bottom: 2em;
+  font-size: 1.3em;
+  letter-spacing: 0.03em;
+}
+label {
+  display: block;
+  margin-bottom: 1rem;
+  font-size: 1.2em;
+  letter-spacing: 0.03em;
 }
 
 input:disabled {
@@ -50,9 +93,13 @@ input:disabled {
 }
 
 button {
-  color: #333;
-  background-color: #f4f4f4;
+  color: hsl(var(--white));
+  background-color: hsl(var(--color-primary));
   outline: none;
+
+  letter-spacing: 0.03em;
+  padding: 1em 2em;
+  font-variant: small-caps;
 }
 
 button:disabled {
@@ -74,9 +121,11 @@ li {
 ul {
   padding: 0;
 }
+
 .hidden {
   display: none;
 }
+
 * {
   /* border: 1px solid green; */
 }

@@ -12,6 +12,8 @@
     import {currentUser, loggedin, verified, admin} from '../utils/stores'
     import UpdateFirestore from "../pages/UpdateFirestore.svelte";
     import {check, success, warning} from '../utils/log'
+    import ClimbingLessons from "../pages/climbingLessons/Home.svelte"
+    import Subscribe from "../pages/climbingLessons/Subscribe.svelte"
 import MakeAdmin from "../pages/MakeAdmin.svelte";
 import MyProfiles from "../pages/MyProfiles.svelte";
 import Stats from '../pages/Stats.svelte'
@@ -86,6 +88,12 @@ import Test from '../pages/Test.svelte'
     },
     {
       url: '/test',component: Test, conditions : []
+    },
+    {
+      url: '/climbingLessons',component: ClimbingLessons, conditions : []
+    },
+    {
+      url: '/climbingLessons/subscribe',component: Subscribe, conditions : []
     },
     
     ]

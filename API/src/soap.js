@@ -75,7 +75,7 @@ export const getEvents = async (client, auth, clubId) => {
           console.log("get events error", err)
           return reject(err)
         }
-        const events = result.extractionSortiesClubReturn
+        const events = result
         resolve(events)
       }
     )

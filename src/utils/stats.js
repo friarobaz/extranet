@@ -2,6 +2,7 @@ import { check, success, warning } from "./log"
 import { getUsersFromFirestore } from "./getUsersFromFirestore"
 import { addDoc, setDoc, doc, getDoc } from "@firebase/firestore"
 import { db } from "./firebase"
+import { getAge } from "../utils/getAge"
 import { get } from "lodash"
 
 const ACTIVITIES = [
@@ -81,13 +82,13 @@ const getActivityInfo = (activity, users) => {
 
 const getAverageAge = (users) => {
   if (!users) return null
-  const ages = users.map((user) => getAge(user))
+  const ages = users.map((user) => getAge(user.dateOfBirth))
   const sum = ages.reduce((a, b) => a + b, 0)
   const average = sum / ages.length || 0
   return Math.round(average)
 }
 
-export const getAge = (user) => {
+/* export const getAge = (user) => {
   if (!user.dateOfBirth) return null
   const birthday = dayjs(user.dateOfBirth, "YYYY-MM-DD")
   const today = dayjs()
@@ -95,7 +96,7 @@ export const getAge = (user) => {
   //keep one decimal
   const roundedAge = Math.round(age * 10) / 10
   return roundedAge
-}
+} */
 
 export const formatStats = (stats) => {
   const sex = {

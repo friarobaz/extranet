@@ -57,3 +57,21 @@ exports.removeAdminRole = functions.https.onCall((data, context) => {
       return err
     })
 })
+
+exports.sendEmail = functions.https.onCall((dataUnused, context) => {
+  const mailgun = require("mailgun-js")
+  const DOMAIN = "sandboxa2f29c8a050345d1b5260338db69ffd7.mailgun.org"
+  const mg = mailgun({
+    apiKey: "9e93c911ec6ad9a4ddc9021d69e1cb35-adf6de59-fecdf81e",
+    domain: DOMAIN,
+  })
+  const data = {
+    from: "Mailgun Sandbox <postmaster@sandboxa2f29c8a050345d1b5260338db69ffd7.mailgun.org>",
+    to: "friarobaz@gmail.com",
+    subject: "Hello",
+    text: "Testing some Mailgun awesomness!",
+  }
+  mg.messages().send(data, function (error, body) {
+    console.log(body)
+  })
+})

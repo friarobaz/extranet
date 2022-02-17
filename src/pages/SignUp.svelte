@@ -37,12 +37,12 @@
 </script>
 
 <form>
-    <h3>Créer un compte</h3>
+    <h1>Créer un compte</h1>
     <EmailForm bind:email={email}/>
     <PasswordForm bind:password={password}/>
     <PasswordForm bind:password={password2}/>
     <br>
-    <button on:click={handleClick}>Créer un compte</button>
+    <button on:click={handleClick}>créer un compte</button>
     <h4 class:hidden={!userCreated}>
         Inscription réussie.
     </h4>

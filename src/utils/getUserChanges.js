@@ -5,6 +5,7 @@ const CAF_FIELDS = [
   "accidentContact",
   "activities",
   "address",
+  //"age",
   "banReason",
   "dateOfBirth",
   "diplomas",
@@ -15,6 +16,7 @@ const CAF_FIELDS = [
   "insurance",
   "lastName",
   "licenceType",
+  "name",
   "phoneNumbers",
   "publicKey",
   "roles",
@@ -27,6 +29,8 @@ const CAF_FIELDS = [
 
 export const getUserChanges = (apiUser, firestoreUser, log = true) => {
   if (log) check("Looking for changes in user")
+  if (!apiUser) warning("apiUser not found")
+  if (!firestoreUser) warning("firestoreUser not found")
   let changes = []
   try {
     for (const field of CAF_FIELDS) {

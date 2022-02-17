@@ -6,7 +6,8 @@ export const getDataFromApi = async (url) => {
   let password, data
   check("Fetching data from API")
   try {
-    password = await getApiPassword()
+    //password = await getApiPassword()
+    password = "bazinga"
     //add password to url
     const newUrl = url + `&password=${password}`
     const response = await fetch(newUrl)
